@@ -54,4 +54,7 @@ We will evaluate you on your ability to solve the problem defined in the require
 If you have any questions regarding requirements, do not hesitate to email your contact at theScore for clarification.
 
 ### Installation and running this solution
-... TODO
+
+You will need to have `docker` and `docker-compose` installed to run this project. It will also be using port 8080 by default though if you would like to change it you can do that inside the `docker-compose` file.
+
+To setup and run this project you will need to type the following command `docker-compose up --build -d` and then open a browser to the url [http://localhost:8080](http://localhost:8080)

@@ -1,0 +1,45 @@
+version: '3'
+
+services:
+  backend:
+    build:
+      context: nfl_backend/.
+    environment:
+      SECRET_KEY_BASE: SHeTduway0OodY9ResNbvFpiqUjsyZX30bqDpR1lBpOYk8lL0n7gkHLtg7jxDBf
+      MIX_ENV: prod
+      PGUSER: postgres
+      PGPASSWORD: postgres
+      PGDATABASE: postgres
+      PGPORT: 5432
+      PGHOST: db
+    depends_on:
+      - db
+  frontend:
+    environment:
+      - PUBLIC_URL=http://frontend
+    build:
+      context: nfl_frontend/.
+    depends_on:
+      - backend
+    stdin_open: true
+  web_server:
+    image: nginx:latest
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+    ports:
+      - 8080:80
+    depends_on:
+      - backend
+      - frontend
+  db:
+    image: postgres:11.9-alpine
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres
+      PGDATA: /var/lib/postgresql/data/pgdata
+    restart: always
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+volumes:
+  pgdata:
